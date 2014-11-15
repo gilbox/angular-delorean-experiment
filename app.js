@@ -8,7 +8,7 @@ app.filter('jpg', function() {
   }
 });
 
-app.factory('Store', function (Flux) {
+app.factory('appStore', function (Flux) {
   var goodTags = ['happy','sad','angry','confused','glasses','troll','cute','child','creepy','stoned','stupid','alone','girl','man','scared','cry','lol','crazy','fuck','celebrity','smile','japanese','cool','clean','sexy'];
   var Store = Flux.createStore({
     data: null,
@@ -125,10 +125,10 @@ app.factory('Store', function (Flux) {
   return new Store();
 });
 
-app.factory('Dispatcher', function (Flux, Store) {
+app.factory('Dispatcher', function (Flux, appStore) {
   return Flux.createDispatcher({
     getStores: function () {
-      return {Store: Store};
+      return {appStore: appStore};
     }
   });
 });
@@ -140,7 +140,7 @@ app.factory('localCache', function($localStorage) {
   });
 });
 
-app.factory('actionCreator', function (Flux, Dispatcher, $http, Store, $rootScope, localCache) {
+app.factory('actionCreator', function (Flux, Dispatcher, $http, appStore, $rootScope, localCache) {
   var searchParams = {
     only: 'people,performing arts',
     //only: 'abstract',
@@ -164,12 +164,12 @@ app.factory('actionCreator', function (Flux, Dispatcher, $http, Store, $rootScop
   }
 
   function loadPhotos() {
-    console.log('loadPhotos...', Store.store.tags);
+    console.log('loadPhotos...', appStore.store.tags);
     var cachedPhotos = [];
     var tags = [];
 
     // pull from local storage
-    _.each(Store.store.tags, function (tag) {
+    _.each(appStore.store.tags, function (tag) {
       if (localCache.photos[tag]) {
         cachedPhotos.push(angular.copy(localCache.photos[tag]));
       } else {

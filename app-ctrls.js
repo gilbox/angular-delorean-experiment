@@ -1,7 +1,7 @@
 var app = angular.module('app');
 
-app.controller('MainCtrl', function($scope, $location, Store, actionCreator) {
-  var store = Store.store;
+app.controller('MainCtrl', function($scope, $location, appStore, actionCreator) {
+  var store = appStore.store;
   $scope.store = store;
 
   actionCreator.initFaces();
@@ -14,7 +14,7 @@ app.controller('MainCtrl', function($scope, $location, Store, actionCreator) {
     return ~~(100*store.totalVoteCount / store.maxVotes) + '%';
   };
 
-  Store.onChange(function() {
+  appStore.onChange(function() {
     // store triggered update
   });
 
@@ -24,14 +24,14 @@ app.controller('MainCtrl', function($scope, $location, Store, actionCreator) {
   })
 });
 
-app.controller('HomeCtrl', function($scope, Store, actionCreator) {
+app.controller('HomeCtrl', function($scope, appStore, actionCreator) {
 
 });
 
-app.controller('TestCtrl', function($scope, Store, actionCreator) {
+app.controller('TestCtrl', function($scope, appStore, actionCreator) {
 
 });
 
-app.controller('ResultsCtrl', function($scope, Store, actionCreator) {
+app.controller('ResultsCtrl', function($scope, appStore, actionCreator) {
 
 });
