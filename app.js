@@ -1,25 +1,6 @@
-var app = angular.module('plunker', ['ngStorage']);
+var app = angular.module('app', ['ngStorage', 'ngRoute']);
 
 app.constant('Flux', DeLorean.Flux);
-
-app.controller('MainCtrl', function($scope, Store, actionCreator, Dispatcher) {
-  var store = Store.store;
-  $scope.store = store;
-
-  actionCreator.initFaces();
-
-  $scope.clickPhoto = function(photo) {
-    actionCreator.selectPhoto(photo);
-  };
-
-  $scope.pct = function() {
-    return ~~(100*store.totalVoteCount / store.maxVotes) + '%';
-  };
-
-  Store.onChange(function() {
-    // store triggered update
-  });
-});
 
 app.filter('jpg', function() {
   return function(f) {
@@ -228,7 +209,7 @@ app.factory('actionCreator', function (Flux, Dispatcher, $http, Store, $rootScop
     },
     selectPhoto: function(photo) {
       Dispatcher.dispatch('selectPhoto', photo).then(loadPhotos);
-    },
+    }
   };
 });
 
